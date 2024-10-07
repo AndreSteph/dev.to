@@ -25,11 +25,12 @@ public class Posts {
     private Users users;
     @OneToOne
     private Image image;
-    @OneToMany
+
+    // Fix the mappedBy property to point to 'posts'
+    @OneToMany(mappedBy = "posts")
     private List<Comment> comment;
+
     @OneToMany
     private List<Likes> likes;
-
-
 
 }

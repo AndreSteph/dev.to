@@ -26,7 +26,7 @@ public class Users {
     @OneToOne
     private Image image;
 
-    @OneToMany
+    @OneToMany(mappedBy = "users")
     private List<Posts> posts;
 
     @OneToOne

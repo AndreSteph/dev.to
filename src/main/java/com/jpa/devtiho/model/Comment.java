@@ -15,6 +15,8 @@ public class Comment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String content;
+    private String imageName;
+    private String imageType;
     @Lob
     private String imageData;
     @ManyToOne

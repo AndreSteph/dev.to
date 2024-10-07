@@ -3,15 +3,15 @@ package com.jpa.devtiho.service;
 import com.jpa.devtiho.model.Users;
 import com.jpa.devtiho.repository.UserRepo;
 import lombok.RequiredArgsConstructor;
+import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.Base64;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -27,6 +27,15 @@ public class UserService {
     private byte[] decodeImage(String base64ImageData) {
         return Base64.getDecoder().decode(base64ImageData);
     }
+
+//    public String verify(Users user){
+//        Authentication authentication = authManager.authenicate(new UsernamePasswordAuthenticationToken(user.getUsername(),user.getPassword()));
+//
+//        if (authentication.isAuthenticated())
+//            return "Success";
+//
+//        return "fail";
+//    }
 
     // Retrieve all developers
     public List<Users> findAllUsers() {
@@ -85,9 +94,11 @@ public class UserService {
             users.setImageData(base64Image.getBytes());
         }
 
+        Map<String, String> response = new HashMap<>();
+        response.put("message", "Saved successfully");
         // Save the new developer
         userRepo.save(users);
-        return ResponseEntity.ok("Saved successfully");
+        return ResponseEntity.ok(response);
     }
 
     // Get developer by ID
@@ -98,24 +109,3 @@ public class UserService {
 
 }
 
-//    public Optional<Users> findByUsername(String username) {
-//        return userRepo.findByUsername(username);
-//    }
-//
-//
-//
-//    public Users createUser(Users users) {
-//        return userRepo.save(users);
-//    }
-//
-//    public void deleteUser(Long id) {
-//        userRepo.deleteById(id);
-//
-//    }
-//
-//
-//
-//    public List<Users> getUsers(){
-//        return userRepo.findAll();
-//    }
-//}

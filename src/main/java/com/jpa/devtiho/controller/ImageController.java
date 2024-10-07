@@ -39,7 +39,7 @@ public class ImageController {
     }
 
 
-    @GetMapping("/{id}")
+    @GetMapping("/getImage/{id}")
     public ResponseEntity<Image> getImage(@PathVariable Long id) {
         Image image = imageService.getImage(id);
         if (image != null) {

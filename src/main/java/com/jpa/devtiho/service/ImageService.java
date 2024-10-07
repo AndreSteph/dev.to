@@ -2,14 +2,13 @@ package com.jpa.devtiho.service;
 
 import com.jpa.devtiho.model.Image;
 import com.jpa.devtiho.repository.ImageRepo;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.Base64;
+import java.util.HashMap;
+import java.util.Map;
 
 @Service
 public class ImageService {
@@ -20,20 +19,17 @@ public class ImageService {
         this.imageRepository = imageRepository;
     }
 
-    private String encodeImage(byte[] imageData){
-        return Base64.getEncoder().encodeToString(imageData);
-    }
-
     public ResponseEntity<?> uploadImage(Image image, MultipartFile imageFile) throws IOException {
         if (imageFile != null && !imageFile.isEmpty()){
             image.setImageName(imageFile.getOriginalFilename());
             image.setImageType(imageFile.getContentType());
 
             //Convert image file to base 64
-            String base64Image = encodeImage(imageFile.getBytes());
-            image.setImageData(Arrays.toString(base64Image.getBytes()));
+            image.setImageData();
         }
-        return ResponseEntity.ok(HttpStatus.CREATED);
+        Map<String, String> response = new HashMap<>();
+        response.put("message", "Image Uploaded");
+        return ResponseEntity.ok(response);
     }
 
     public Image getImage(Long id) {

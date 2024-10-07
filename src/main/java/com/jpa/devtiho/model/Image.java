@@ -4,8 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
-
 
 @Entity
 @Data
@@ -19,7 +17,7 @@ public class Image {
     private String imageName;
     private String imageType;
 
-    public void setImageData(String base64Image) {
+    public void setImageData() {
 
     }
 

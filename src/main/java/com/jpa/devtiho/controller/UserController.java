@@ -26,6 +26,11 @@ public class UserController {
         return Base64.getDecoder().decode(base64ImageData);
     }
 
+//    @RequestMapping("sectest")
+//    public String securityTest(@RequestBody Users user){
+//        return service.verify(user);
+//    }
+
     // Retrieve all users
     @GetMapping(path = "all")
     public List<Users> findAllUsers() {
