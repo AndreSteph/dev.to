@@ -3,10 +3,11 @@ package com.jpa.devtiho.service;
 import com.jpa.devtiho.model.Users;
 import com.jpa.devtiho.repository.UserRepo;
 import lombok.RequiredArgsConstructor;
-import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -17,6 +18,9 @@ import java.util.*;
 @RequiredArgsConstructor
 public class UserService {
 
+
+    private JWTService jwtService;
+    AuthenticationManager authManager;
     private final UserRepo userRepo;
     // Utility to convert byte[] to Base64 string
     private String encodeImage(byte[] imageData) {
@@ -28,14 +32,13 @@ public class UserService {
         return Base64.getDecoder().decode(base64ImageData);
     }
 
-//    public String verify(Users user){
-//        Authentication authentication = authManager.authenicate(new UsernamePasswordAuthenticationToken(user.getUsername(),user.getPassword()));
-//
-//        if (authentication.isAuthenticated())
-//            return "Success";
-//
-//        return "fail";
-//    }
+    public String verify(Users user){
+        Authentication authentication = authManager.authenticate(new UsernamePasswordAuthenticationToken(user.getUsername(),user.getPassword()));
+
+        if (authentication.isAuthenticated())
+            return jwtService.generateToken(user.getUsername());
+        return "fail";
+    }
 
     // Retrieve all developers
     public List<Users> findAllUsers() {

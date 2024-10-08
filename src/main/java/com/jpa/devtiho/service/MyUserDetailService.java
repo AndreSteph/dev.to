@@ -26,6 +26,7 @@ public class MyUserDetailService implements UserDetailsService {
             throw new UsernameNotFoundException("User not found");
         }
 
+
         Users user = optionalUser.get(); // Extract the Users object from Optional
         return new UserPrincipal(user);  // Pass the Users object to the UserPrincipal constructor
 
